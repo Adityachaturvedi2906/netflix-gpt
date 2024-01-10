@@ -7,6 +7,7 @@ import { auth } from '../utils/firebase'
 import { addUser } from "../utils/userSlice"
 
 import { useDispatch } from 'react-redux';
+import { Avatar } from '../utils/constants';
 
 const Login = () => {
 
@@ -36,13 +37,11 @@ const Login = () => {
 				.then((userCredential) => {
 					const user = userCredential.user;
 					updateProfile(user, {
-						displayName: name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
+						displayName: name.current.value, photoURL: Avatar
 					}).then(() => {
 						//updating the Redux store
 						const { uid, email, displayName, photoURL } = auth.currentUser;
 						dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }))
-						navigate("/browse")
-						console.log(user);
 					}).catch((error) => {
 						setErrorMessage(error.message)
 					});
